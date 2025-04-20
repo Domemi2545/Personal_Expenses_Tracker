@@ -97,10 +97,11 @@ date_range = st.sidebar.date_input(
 
 # Category filter
 all_categories = sorted(data['Category'].dropna().unique())
+# เป็น (แบบที่ 1 - ใช้ลิสต์ว่าง)
 selected_categories = st.sidebar.multiselect(
     "Select Categories",
     options=all_categories,
-    default=all_categories[:5]  # Default to first 5 categories
+    default=[]  # เริ่มต้นไม่มีหมวดหมู่ที่เลือก
 )
 
 # Filter data based on selections
@@ -113,6 +114,9 @@ else:
 
 if selected_categories:
     filtered_data = filtered_data[filtered_data['Category'].isin(selected_categories)]
+else:
+    # เมื่อไม่มีหมวดหมู่ถูกเลือก ให้แสดงข้อมูลทั้งหมด (ไม่ต้องทำอะไรเพิ่ม)
+    pass
 
 # Key metrics
 st.header("Key Financial Metrics")
@@ -628,19 +632,23 @@ with insights_col2:
 st.markdown("---")
 st.header("Personal Finance Analysis")
 st.markdown("""
-This dashboard analyzes personal finances between November 2021 and March 2022. The visualizations show spending patterns, income sources, and financial trends across this period.
+            
+แดชบอร์ดนี้วิเคราะห์การเงินส่วนบุคคลระหว่างเดือนพฤศจิกายน 2021 ถึงมีนาคม 2022 การแสดงผลข้อมูลแสดงให้เห็นรูปแบบการใช้จ่าย แหล่งที่มาของรายได้ และแนวโน้มทางการเงินตลอดช่วงเวลานี้
 
-**Key observations:**
-1. Food expenses constitute the largest category of spending
-2. Income has been irregular with major contributions from parents
-3. Weekends show higher spending compared to weekdays
-4. Major expenses include rent and social activities
 
-**Recommendations:**
-- Set a monthly budget for food expenses
-- Track transportation expenses which vary significantly
-- Plan for irregular large expenses
-- Monitor balance trends to ensure financial stability
+**ข้อสังเกตที่สำคัญ:**
+1. ค่าใช้จ่ายด้านอาหารเป็นหมวดหมู่การใช้จ่ายที่ใหญ่ที่สุด
+2. รายได้ไม่สม่ำเสมอ โดยมีเงินสนับสนุนส่วนใหญ่มาจากผู้ปกครอง
+3. วันหยุดสุดสัปดาห์มีการใช้จ่ายสูงกว่าวันธรรมดา
+4. ค่าใช้จ่ายหลักประกอบด้วยค่าเช่าและกิจกรรมทางสังคม
+
+
+**คำแนะนำ:**
+- กำหนดงบประมาณรายเดือนสำหรับค่าใช้จ่ายด้านอาหาร
+- ติดตามค่าใช้จ่ายด้านการขนส่งซึ่งแตกต่างกันอย่างมาก
+- วางแผนสำหรับค่าใช้จ่ายก้อนใหญ่ที่ไม่สม่ำเสมอ
+- ติดตามแนวโน้มยอดคงเหลือเพื่อให้มั่นใจถึงเสถียรภาพทางการเงิน
+
 """)
 
 # Add download capability
